@@ -81,6 +81,48 @@
   }
 
   /* ---------------------------------------------------------------------
+     Impact stats — animated count-up when scrolled into view
+     --------------------------------------------------------------------- */
+  const statValues = document.querySelectorAll('.stat-value');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const animateCount = (el) => {
+    const target = parseInt(el.dataset.countTo, 10);
+    if (prefersReducedMotion || !target) {
+      el.textContent = target.toLocaleString();
+      return;
+    }
+    const duration = 1600;
+    const start = performance.now();
+    const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const value = Math.round(target * easeOutQuint(progress));
+      el.textContent = value.toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if ('IntersectionObserver' in window && statValues.length) {
+    const statObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCount(entry.target);
+            statObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    statValues.forEach((el) => statObserver.observe(el));
+  } else {
+    statValues.forEach((el) => animateCount(el));
+  }
+
+  /* ---------------------------------------------------------------------
      Scroll reveal — spatial depth elevation via IntersectionObserver
      --------------------------------------------------------------------- */
   const revealTargets = document.querySelectorAll('.reveal');
