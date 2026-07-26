@@ -33,13 +33,32 @@
       <li><a href="#impact">Impact</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark theme" type="button">
-      <span class="theme-icon" aria-hidden="true">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
-      </span>
-    </button>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark theme" type="button">
+        <span class="theme-icon" aria-hidden="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        </span>
+      </button>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav" type="button">
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
   </nav>
+
+  <div class="mobile-nav-scrim" id="mobile-nav-scrim"></div>
+
+  <div class="mobile-nav-panel" id="mobile-nav" aria-hidden="true">
+    <ul class="mobile-nav-links">
+      <li style="--i:0"><a href="#about"><span class="nav-index">01</span>About</a></li>
+      <li style="--i:1"><a href="#ventures"><span class="nav-index">02</span>Ventures</a></li>
+      <li style="--i:2"><a href="#impact"><span class="nav-index">03</span>Impact</a></li>
+      <li style="--i:3"><a href="#contact"><span class="nav-index">04</span>Contact</a></li>
+    </ul>
+    <div class="mobile-nav-footer" style="--i:4">
+      <a href="https://feedtheworldinitiative.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary mobile-nav-cta">Support #FeedTheWorld</a>
+    </div>
+  </div>
 </header>
 
 <main id="top">
