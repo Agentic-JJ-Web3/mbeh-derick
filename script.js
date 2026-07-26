@@ -146,12 +146,19 @@
   }
 
   /* ---------------------------------------------------------------------
-     Contact form (client-side only demo submission)
+     Contact form — sent via EmailJS (client-side, no backend needed)
+     Replace these three IDs with your own from https://dashboard.emailjs.com
      --------------------------------------------------------------------- */
+  const EMAILJS_PUBLIC_KEY = '63i2XBVNHmNj2hacN';
+  const EMAILJS_SERVICE_ID = 'service_r90skmv';
+  const EMAILJS_TEMPLATE_ID = 'template_vecc7mc';
+
   const form = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
 
-  if (form) {
+  if (form && window.emailjs) {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
@@ -159,9 +166,28 @@
         status.style.color = 'var(--accent-blue)';
         return;
       }
-      status.textContent = `Thanks, ${form.name.value.split(' ')[0]}! Your message has been noted — I'll be in touch soon.`;
-      status.style.color = 'var(--accent-green)';
-      form.reset();
+
+      const submitBtn = form.querySelector('.form-submit');
+      const firstName = form.name.value.split(' ')[0];
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      status.textContent = '';
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+        .then(() => {
+          status.textContent = `Thanks, ${firstName}! Your message has been sent — I'll be in touch soon.`;
+          status.style.color = 'var(--accent-green)';
+          form.reset();
+        })
+        .catch((error) => {
+          console.error('EmailJS error:', error);
+          status.textContent = 'Something went wrong sending your message — please try again or reach out directly.';
+          status.style.color = 'var(--accent-red)';
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        });
     });
   }
 
