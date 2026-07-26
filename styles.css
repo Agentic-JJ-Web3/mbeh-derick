@@ -323,10 +323,6 @@ section {
   aspect-ratio: 1 / 1;
 }
 
-.hero-photo .media-placeholder {
-  font-size: 12px;
-}
-
 @keyframes hero-photo-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
@@ -514,16 +510,6 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.media-placeholder {
-  position: relative;
-  z-index: 0;
-  font-size: 13px;
-  text-align: center;
-  line-height: 1.5;
-  color: var(--text-tertiary);
-  padding: 12px;
 }
 
 /* ==========================================================================
