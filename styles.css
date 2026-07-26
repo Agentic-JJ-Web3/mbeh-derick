@@ -594,7 +594,8 @@ body.nav-open {
 .bento-cell,
 .venture-card,
 .contact-wrap,
-.media-slot {
+.media-slot,
+.stat-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
@@ -763,6 +764,95 @@ body.nav-open {
   background: var(--glass-bg-strong);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Impact Stats (dynamic count-up band)
+   ========================================================================== */
+
+.impact-stats {
+  margin-bottom: 56px;
+}
+
+.stats-live {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-green);
+}
+
+.pulse-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  flex-shrink: 0;
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent-green);
+  animation: pulse-ring 2s var(--ease-spatial) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 36px 24px;
+  text-align: center;
+  transition: transform 0.4s var(--ease-spatial), box-shadow 0.4s var(--ease-spatial);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.stat-number {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot::after {
+    animation: none;
+  }
 }
 
 /* ==========================================================================
@@ -974,6 +1064,16 @@ body.nav-open {
   .impact-gallery .gallery-item:nth-child(1),
   .impact-gallery .gallery-item:nth-child(4) {
     grid-column: span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 28px 24px;
   }
 }
 
