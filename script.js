@@ -32,6 +32,55 @@
   });
 
   /* ---------------------------------------------------------------------
+     Mobile nav — hamburger unfurls a spatial glass panel
+     --------------------------------------------------------------------- */
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavScrim = document.getElementById('mobile-nav-scrim');
+  const MOBILE_NAV_BREAKPOINT = '(min-width: 769px)';
+
+  if (menuToggle && mobileNav && mobileNavScrim) {
+    const focusableSelector = 'a, button';
+    const mobileNavFocusable = mobileNav.querySelectorAll(focusableSelector);
+
+    const setMenuOpen = (open) => {
+      menuToggle.classList.toggle('is-open', open);
+      mobileNav.classList.toggle('is-open', open);
+      mobileNavScrim.classList.toggle('is-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      mobileNav.setAttribute('aria-hidden', String(!open));
+      document.body.classList.toggle('nav-open', open);
+      mobileNavFocusable.forEach((el) => {
+        el.tabIndex = open ? 0 : -1;
+      });
+    };
+
+    setMenuOpen(false);
+
+    menuToggle.addEventListener('click', () => {
+      setMenuOpen(!mobileNav.classList.contains('is-open'));
+    });
+
+    mobileNavScrim.addEventListener('click', () => setMenuOpen(false));
+
+    mobileNavFocusable.forEach((el) => {
+      el.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+        setMenuOpen(false);
+        menuToggle.focus();
+      }
+    });
+
+    const desktopQuery = window.matchMedia(MOBILE_NAV_BREAKPOINT);
+    desktopQuery.addEventListener('change', (e) => {
+      if (e.matches) setMenuOpen(false);
+    });
+  }
+
+  /* ---------------------------------------------------------------------
      Scroll reveal — spatial depth elevation via IntersectionObserver
      --------------------------------------------------------------------- */
   const revealTargets = document.querySelectorAll('.reveal');
