@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mbeh-derick.vercel.app/sitemap.xml
